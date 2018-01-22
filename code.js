@@ -7,6 +7,16 @@ window.addEventListener("load", function(){
 	const PI = Math.PI;
 	const UP = 38;
 	const DOWN = 40;
+	let keystate = {};
+	
+	document.addEventListener("keydown", function(event){
+		keystate[event.keyCode]=true;
+	});	
+	document.addEventListener("keyup", function(event){
+		delete keystate[event.keyCode];
+	});
+	
+	
 	
 	
 	
