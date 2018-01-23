@@ -15,7 +15,30 @@ window.addEventListener("load", function(){
 	document.addEventListener("keyup", function(event){
 		delete keystate[event.keyCode];
 	});
+	/*
+	console.log(keystate);	
+	setTimeout(function(){console.log(keystate);}, 3000);
+	*/
 	
+	let player = {
+		x: null,
+		y: null,
+		width: 20,
+		height: 100,
+		update: function(){
+			if(keystate.UP){
+				this.y+=7;
+			}
+			if(keystate.DOWN){
+				this.y-=7;
+			}
+			this.y = Math.max(Math.min(this.y, cvsh-this.height),0);
+		},
+		draw: function(){
+			context.fillRect(this.x, this.y, this.width, this.height);
+		}
+		
+	};
 	
 	
 	
