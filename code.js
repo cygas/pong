@@ -112,6 +112,9 @@ window.addEventListener("load", function(){
 	};
 	
 	
+	let test;
+	
+	
 	
 	
 	
