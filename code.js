@@ -1,7 +1,7 @@
 window.addEventListener("load", function(){
 	
 	const canvas = document.getElementById("canvas");
-	const context = canvas.getContext("2d");
+	const ctx = canvas.getContext("2d");
 	const cvsw = canvas.width;
 	const cvsh = canvas.height;
 	const PI = Math.PI;
@@ -29,15 +29,15 @@ window.addEventListener("load", function(){
 		height: 100,
 		update: function(){
 			if(keystate[UP]){
-				this.y+=7;
+				this.y-=7;
 			}
 			if(keystate[DOWN]){
-				this.y-=7;
+				this.y+=7;
 			}
 			this.y = Math.max(Math.min(this.y, cvsh-this.height),0);
 		},
 		draw: function(){
-			context.fillRect(this.x, this.y, this.width, this.height);
+			ctx.fillRect(this.x, this.y, this.width, this.height);
 		}
 		
 	};
@@ -111,13 +111,47 @@ window.addEventListener("load", function(){
 		}		
 	};
 	
+	function init(){
+		player.x = player.width;
+		player.y = (cvsh - player.height)/2;
+		
+		ai.x = cvsw - 2*ai.width;
+		ai.y = (cvsh - ai.height)/2;
+		
+		ball.serve(1);
+	}
 	
-	let test;
+	function draw(){
+		ctx.fillRect(0,0, cvsw, cvsh);
+		ctx.save();
+		ctx.fillStyle = "#fff";
+		ball.draw();
+		player.draw();
+		ai.draw();
+		
+		const w = 4;
+		const x = (cvsw-w)/2;
+		const step = cvsh/20;
+		let y = 0;
+		while(y<cvsh){
+			ctx.fillRect(x, y+step/4, w, step/2);
+			y+=step;
+		}
+		
+		ctx.restore();
+	}
 	
+	function update(){
+		ball.update();
+		player.update();
+		ai.update();
+		draw();
+		requestAnimationFrame(update);
+	}
 	
-	
-	
-	
+	init();
+	update();
+		
 	
 });
 
