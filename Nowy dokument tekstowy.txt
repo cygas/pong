@@ -10,7 +10,7 @@ window.addEventListener("load", function(){
 	let keystate = {};
 	
 	
-	//zobacz, jak bÄ™dzie bez tego
+	//zobacz, jak bêdzie bez tego
 	document.addEventListener("keydown", function(event){
 		keystate[event.keyCode]=true;
 	});	
@@ -93,13 +93,12 @@ window.addEventListener("load", function(){
 			this.vel.y = 0;
 			
 		},
-		start: function(side){
+		start: function(){
 			let r = Math.random();
 			let phi = 0.1*PI*(1-2*r);
 			
 			if(this.vel.x === 0 && this.vel.y ===0){
-				this.vel.x = side*this.speed*Math.cos(phi);
-				this.vel.y = this.speed*Math.sin(phi);
+				this.vel.x = 
 			}
 		},
 		update: function(){
@@ -117,7 +116,7 @@ window.addEventListener("load", function(){
 			}
 			
 			let padle = this.vel.x < 0 ? player : ai;
-			//czy piÅ‚ka jest w obrÄ™bie paletki
+			//czy pi³ka jest w obrêbie paletki
 			if(AABB(padle.x, padle.y, padle.width, padle.height, this.x, this.y, this.side, this.side)){
 				this.x = padle===player? player.x +player.width: ai.x - this.side;
 				// 0<=n<=1
@@ -231,17 +230,18 @@ window.addEventListener("load", function(){
 		draw();
 		requestAnimationFrame(update);
 	}
+	/*
+	canvas.addEventListener('keydown', function(event){
+		if(player.score === 0 && ai.score === 0){
+			init(1);
+		}
+		
+	});
 	
+	*/
 	init();
 	update();
-	
-	/*
-	canvas.addEventListener("keydown", function(event){
-		if(event.keyCode === 32){
-			ball.start();
-		}
-	});
-	*/
+		
 	
 });
 
