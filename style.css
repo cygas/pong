@@ -2,14 +2,12 @@ body{
 	align-items: center;
 	align-content: center;
 	display: flex;
-	background: #202020;
-		
+	background-color: #202020;		
 }
 canvas{
 	border: solid 1px #fff;
 	border-left: none;
-	border-right: none;
-	image-rendering: pixelated;
+	border-right: none;	
 	height: 100%;
 	margin: 0 auto;
 }

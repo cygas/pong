@@ -92,7 +92,7 @@ window.addEventListener("load", function(){
 			
 			if(0>this.y || this.y+this.side > cvsh){
 				let offset = this.vel.y < 0? 0-this.y:cvsh-(this.y + this.side);
-				//this.y += 2*offset;
+				this.y += 2*offset; //to można wyłączyć. ale wtedy może robić się bug na końcach 
 				this.vel.y *= -1;
 			}
 			
