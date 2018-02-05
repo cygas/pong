@@ -8,7 +8,8 @@ window.addEventListener("load", function(){
 	const UP = 38;
 	const DOWN = 40;
 	let keystate = {};
-	
+	let number = null;	
+	let s = Math.random()>0.5?1:-1;
 	
 	//zobacz, jak będzie bez tego
 	document.addEventListener("keydown", function(event){
@@ -36,14 +37,11 @@ window.addEventListener("load", function(){
 				this.y+=7;
 			}
 			this.y = Math.max(Math.min(this.y, cvsh-this.height),0);
-			if(ball.x+ball.side*0.5+2>=cvsw){
-				this.score ++;
-			}
+			
 		},
 		draw: function(){
 			ctx.fillRect(this.x, this.y, this.width, this.height);
-		}
-		
+		}		
 	};
 	
 	let ai= {		
@@ -56,9 +54,7 @@ window.addEventListener("load", function(){
 			let desty = ball.y - (this.height - ball.side)*0.5;
 			this.y += (desty-this.y)*0.1;
 			this.y  = Math.max(Math.min(this.y, cvsh - this.height),0);
-			if(ball.x+ball.side/2-2<=0){
-				this.score ++;
-			}
+			
 		},
 		draw: function(){			
 			ctx.fillRect(this.x,this.y,this.width, this.height);
@@ -73,25 +69,13 @@ window.addEventListener("load", function(){
 			y: 0
 		},
 		side: 20,
-		speed: 12,	
-		serve: function(side){
-			let r = Math.random();
-			this.x = side === 1? player.x+player.width : ai.x - this.side;
-			this.y = (cvsh-this.side)*r;
-			
-			let phi = 0.1*PI*(1-2*r);
-			this.vel = {
-				x: side*this.speed*Math.cos(phi),
-				y: this.speed*Math.sin(phi)
-			}
-		},
+		speed: 12,			
 		reset: function(){
 			this.x = cvsw/2 - this.side/2;
 			this.y = cvsh/2 - this.side/2;
 			
 			this.vel.x = 0;
-			this.vel.y = 0;
-			
+			this.vel.y = 0;			
 		},
 		start: function(side){
 			let r = Math.random();
@@ -130,9 +114,10 @@ window.addEventListener("load", function(){
 			}
 			
 			if(this.x+this.side<0 || this.x> cvsw){		
-				let num = (padle===player?1:-1)
-				init(num);
-				//this.serve(padle===player?1:-1);									
+				let num = (padle===player?1:-1);
+				number = (padle===player?1:-1);
+				num===1?ai.score++:player.score++;
+				this.reset();										
 			}
 		},
 		
@@ -148,16 +133,8 @@ window.addEventListener("load", function(){
 		
 		ai.x = cvsw - 2*ai.width;
 		ai.y = (cvsh - ai.height)/2;
-		
-		
-			
-				if(player.score===0 && ai.score===0){
-					ball.serve(1);
-				}else{
-					ball.serve(num);
-				}
-			
-		
+
+		ball.reset();		
 	}
 	
 	function draw(){
@@ -232,16 +209,18 @@ window.addEventListener("load", function(){
 		requestAnimationFrame(update);
 	}
 	
-	init();
-	update();
-	
-	/*
-	canvas.addEventListener("keydown", function(event){
-		if(event.keyCode === 32){
-			ball.start();
-		}
+	init();	
+	update();	
+	document.addEventListener("keydown", function(event){
+			if(event.keyCode === 32){
+				if(player.score===0 && ai.score===0){
+					ball.start(s);
+				}else{
+					ball.start(number);
+				}					
+			}
 	});
-	*/
+	
 	
 });
 
